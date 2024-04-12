@@ -46,7 +46,7 @@ export CONFIGURE_FIREWALL=true
 
 # SSL (Let's Encrypt)
 export CONFIGURE_LETSENCRYPT=true
-export FQDN="node-2"
+export FQDN="node-2.craftsupport.site"
 export EMAIL="admin@craftsupport.net"
 # ------------ User input functions ------------ #
 
