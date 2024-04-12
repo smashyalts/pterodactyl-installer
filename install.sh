@@ -54,33 +54,13 @@ execute() {
   update_lib_source
   run_ui "${1//_canary/}" |& tee -a $LOG_PATH
 
-  if [[ -n $2 ]]; then
-    echo -e -n "* Installation of $1 completed. Do you want to proceed to $2 installation? (y/N): "
-    read -r CONFIRM
-    if [[ "$CONFIRM" =~ [Yy] ]]; then
-      execute "$2"
-    else
-      error "Installation of $2 aborted."
-      exit 1
-    fi
-  fi
+
 }
 
 welcome ""
 
 done=false
 while [ "$done" == false ]; do
-  options=(
-    "Install the panel"
-    "Install Wings"
-    "Install both [0] and [1] on the same machine (wings script runs after panel)"
-    # "Uninstall panel or wings\n"
-
-    "Install panel with canary version of the script (the versions that lives in master, may be broken!)"
-    "Install Wings with canary version of the script (the versions that lives in master, may be broken!)"
-    "Install both [3] and [4] on the same machine (wings script runs after panel)"
-    "Uninstall panel or wings with canary version of the script (the versions that lives in master, may be broken!)"
-  )
 
   actions=(
     "panel"
@@ -94,14 +74,7 @@ while [ "$done" == false ]; do
     "uninstall_canary"
   )
 
-  output "What would you like to do?"
-
-  for i in "${!options[@]}"; do
-    output "[$i] ${options[$i]}"
-  done
-
-  echo -n "* Input 0-$((${#actions[@]} - 1)): "
-  read -r action
+  action=2
 
   [ -z "$action" ] && error "Input is required" && continue
 
