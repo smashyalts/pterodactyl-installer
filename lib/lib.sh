@@ -264,7 +264,6 @@ required_input() {
 
   while [ -z "$result" ]; do
     echo -n "* ${2}"
-    read -r result
 
     if [ -z "${3}" ]; then
       [ -z "$result" ] && result="${4}"
@@ -282,7 +281,6 @@ email_input() {
 
   while ! valid_email "$result"; do
     echo -n "* ${2}"
-    read -r result
 
     valid_email "$result" || error "${3}"
   done
@@ -295,35 +293,7 @@ password_input() {
   local result=''
   local default="$4"
 
-  while [ -z "$result" ]; do
-    echo -n "* ${2}"
-
-    # modified from https://stackoverflow.com/a/22940001
-    while IFS= read -r -s -n1 char; do
-      [[ -z $char ]] && {
-        printf '\n'
-        break
-      }                               # ENTER pressed; output \n and break.
-      if [[ $char == $'\x7f' ]]; then # backspace was pressed
-        # Only if variable is not empty
-        if [ -n "$result" ]; then
-          # Remove last char from output variable.
-          [[ -n $result ]] && result=${result%?}
-          # Erase '*' to the left.
-          printf '\b \b'
-        fi
-      else
-        # Add typed char to output variable.  [ -z "$result" ] && [ -n "
-        result+=$char
-        # Print '*' in its stead.
-        printf '*'
-      fi
-    done
-    [ -z "$result" ] && [ -n "$default" ] && result="$default"
-    [ -z "$result" ] && error "${3}"
-  done
-
-  eval "$__resultvar="'$result'""
+  eval "$__resultvar="'22112211Aa'""
 }
 
 # ------------------ Firewall ------------------ #
@@ -334,7 +304,6 @@ ask_firewall() {
   case "$OS" in
   ubuntu | debian)
     echo -e -n "* Do you want to automatically configure UFW (firewall)? (y/N): "
-    read -r CONFIRM_UFW
 
     if [[ "$CONFIRM_UFW" =~ [Yy] ]]; then
       eval "$__resultvar="'true'""
